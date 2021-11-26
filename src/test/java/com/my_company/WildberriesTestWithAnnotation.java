@@ -11,8 +11,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 
 public class WildberriesTestWithAnnotation {
-    private WildberriesMainPage wbMainPage = new WildberriesMainPage();
-
+    WildberriesMainPage wbMainPage = new WildberriesMainPage();
+    TestBase testBase = new TestBase();
     @CsvSource(value = {
             "Женщинам",
             "Мужчинам",
@@ -23,8 +23,8 @@ public class WildberriesTestWithAnnotation {
     @ParameterizedTest(name = "Проверка названия вкладки {0}")
     void wildberriesTabNameTestWithCsvSource(String tabName, TestInfo testInfo) {
         Configuration.startMaximized = false;
-        wbMainPage.openMainPage()
-                .choseTab(tabName)
+        testBase.beforeEach();
+        wbMainPage.choseTab(tabName)
                 .checkTitleName(tabName);
         System.out.println("Config for test: "
                 + testInfo.getDisplayName()
@@ -38,7 +38,8 @@ public class WildberriesTestWithAnnotation {
     @DisplayName("Проверка названия вкладки Обувь")
     void wildberriesTabNameShoes(TestInfo testInfo) {
         Configuration.startMaximized = true;
-        wbMainPage.openMainPage()
+        testBase.beforeEach();
+        wbMainPage
                 .choseTab("Обувь")
                 .checkTitleName("Обувь");
         System.out.println("Config for test: "

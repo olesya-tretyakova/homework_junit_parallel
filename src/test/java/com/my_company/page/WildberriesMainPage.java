@@ -1,32 +1,24 @@
 package com.my_company.page;
 
-import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 
 public class WildberriesMainPage {
-    public WildberriesMainPage openMainPage() {
-        open("https://www.wildberries.kz/");
-        return this;
-    }
+    private static SelenideElement openMenuBtn = $(".j-menu-burger-btn");
+    private static SelenideElement menuList = $(".j-menu-active");
+    private static SelenideElement pageTitle = $(".catalog-title");
 
     public WildberriesMainPage choseTab(String tabName) {
-        $(".j-menu-burger-btn").click();
-        $(".j-menu-active").$(byText(tabName)).click();
+        openMenuBtn.click();
+        menuList.$(byText(tabName)).click();
         return this;
     }
 
     public WildberriesMainPage checkTitleName(String tabName) {
-        $(".catalog-title").shouldHave(text(tabName));
-        return this;
-    }
-
-    public WildberriesMainPage clickItemWithNumber(int number) {
-        $(".j-menu-burger-btn").click();
-        $(".menu-burger__main-list-item--subcategory", number).click();
+        pageTitle.shouldHave(text(tabName));
         return this;
     }
 }
